@@ -7,8 +7,22 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
   <app-root></app-root>
 </body>
+<script src="https://www.gstatic.com/firebasejs/5.5.8/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyCZLogdf6L_tIkhERCvPBJVWuKtaiy21R0",
+    authDomain: "chattermost-46e40.firebaseapp.com",
+    databaseURL: "https://chattermost-46e40.firebaseio.com",
+    projectId: "chattermost-46e40",
+    storageBucket: "chattermost-46e40.appspot.com",
+    messagingSenderId: "424449989958"
+  };
+  firebase.initializeApp(config);
+</script>
 </html>
