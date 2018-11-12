@@ -2,7 +2,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 
-import { AppRoutingModule } from './app-routing.module';
 import {AppComponent} from './app.component';
 import {MaterialModule} from './material.module';
 import { SidenavComponent } from './navigation/sidenav/sidenav.component';
@@ -14,7 +13,6 @@ import { SidenavComponent } from './navigation/sidenav/sidenav.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule
   ],
