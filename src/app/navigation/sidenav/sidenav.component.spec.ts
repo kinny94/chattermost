@@ -17,7 +17,8 @@ describe('SidenavComponent', () => {
         BrowserAnimationsModule,
         BrowserModule
       ],
-      declarations: [ SidenavComponent ],
+      declarations: [
+        SidenavComponent ],
     })
     .compileComponents();
   }));
@@ -26,9 +27,5 @@ describe('SidenavComponent', () => {
     fixture = TestBed.createComponent(SidenavComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
   });
 });

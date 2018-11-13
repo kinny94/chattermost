@@ -1,7 +1,9 @@
 <div class="sidenav-container" [class.example-is-mobile]="mobileQuery.matches">
   <mat-toolbar color="primary" class="sidenav-toolbar">
     <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
-    <h1 class="sidenav-app-name">Chattermost</h1>
+    <span>Third Line</span>
+    <span class="spacer"></span>
+    <app-login></app-login>
   </mat-toolbar>
 
   <mat-sidenav-container class="example-sidenav-container">
@@ -15,7 +17,7 @@
     </mat-sidenav>
 
     <mat-sidenav-content>
-      <p>Content</p>
+      <app-home></app-home>
     </mat-sidenav-content>
   </mat-sidenav-container>
 </div>
