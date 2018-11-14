@@ -16,13 +16,17 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { HomeComponent } from './components/home/home.component';
+import { LogoutComponent } from './components/logout/logout.component';
+import { LandingPageComponent } from './components/landing-page/landing-page.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SidenavComponent,
     LoginComponent,
-    HomeComponent
+    HomeComponent,
+    LogoutComponent,
+    LandingPageComponent
   ],
   imports: [
     BrowserModule,
