@@ -23,7 +23,7 @@ export class UserService {
     });
   }
 
-  get( uid ): AngularFireObject<User> {
+  getId( uid ): AngularFireObject<User> {
     return this.db.object('/users/' + uid );
   }
 }
