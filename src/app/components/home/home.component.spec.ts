@@ -7,6 +7,12 @@ import { async, TestBed } from '@angular/core/testing';
 
 describe('SidenavComponent', () => {
 
+  beforeAll(() => {
+    Object.defineProperty(window, 'matchMedia', {
+      value: jest.fn(() => ({ matches: true }))
+    });
+  });
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [

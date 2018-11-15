@@ -2,11 +2,38 @@
   margin-bottom: 2%;
 }
 
+.card :hover{
+  cursor: pointer;
+  background-color: #eee;
+  transition: all .2s ease-in-out;
+  transform: scale(1.01);
+}
+
 img{
-  max-height: 400px;
-  min-height: 400px;
+  max-height: 350px;
+  min-height: 350px;
 }
 
 @media only screen and (max-width: 600px) {
   margin-bottom: 0;
 }
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-container > * {
+  width: 100%;
+}
+
+.mat-card-actions{
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+
+.mat-card-actions > button{
+  margin-top: -20%;
+}
+
