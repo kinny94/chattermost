@@ -20,17 +20,10 @@ import { HomeComponent } from './components/home/home.component';
 import { LogoutComponent } from './components/logout/logout.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { AllUsersComponent } from './components/all-users/all-users.component';
+import { EditProfileComponent } from './components/edit-profile/edit-profile.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    SidenavComponent,
-    LoginComponent,
-    HomeComponent,
-    LogoutComponent,
-    LandingPageComponent,
-    AllUsersComponent
-  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -38,19 +31,28 @@ import { AllUsersComponent } from './components/all-users/all-users.component';
     AngularFireAuthModule,
     AngularFireDatabaseModule,
     FlexLayoutModule,
-    RouterModule,
+    FormsModule,
     AngularFireModule.initializeApp( environment.firebase ),
     RouterModule.forRoot([
-      {
-        path: '', component: AppComponent
-      }
+      { path: 'edit-profile', component:  EditProfileComponent, canActivate: [ AuthGuardService ]},
+      { path: '', component: HomeComponent }
     ])
+  ],
+  declarations: [
+    AppComponent,
+    SidenavComponent,
+    LoginComponent,
+    HomeComponent,
+    LogoutComponent,
+    LandingPageComponent,
+    AllUsersComponent,
+    EditProfileComponent
   ],
   providers: [
     AuthGuardService,
     AuthService,
     UserService
   ],
-  bootstrap: [AppComponent]
+  bootstrap : [AppComponent]
 })
 export class AppModule { }

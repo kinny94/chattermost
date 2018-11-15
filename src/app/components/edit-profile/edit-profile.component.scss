@@ -1,0 +1,26 @@
+.wrapper{
+  text-align: center;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-container > * {
+  width: 100%;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+.submit-button{
+  margin-top: 2%;
+  margin-bottom: 2%;
+}
+
+.error{
+  color: red;
+}
