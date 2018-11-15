@@ -1,4 +1,4 @@
-import { LandingPageComponent } from './landing-page.component';
+import { AllUsersComponent } from './all-users.component';
 import { AppModule } from './../../app.module';
 import { APP_BASE_HREF } from '@angular/common';
 import { AuthService } from './../../services/auth-service/auth.service';
@@ -27,7 +27,7 @@ describe('SidenavComponent', () => {
   }));
 
   it('should create the app', () => {
-    const fixture = TestBed.createComponent(LandingPageComponent);
+    const fixture = TestBed.createComponent(AllUsersComponent);
     const app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();
   });

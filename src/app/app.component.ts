@@ -5,7 +5,6 @@ import { Component } from '@angular/core';
 import { UserService } from './services/user-service/user.service';
 
 import { AngularFireDatabase } from '@angular/fire/database';
-import * as firebase from 'firebase';
 import { map } from 'rxjs/operators';
 
 @Component({
@@ -17,6 +16,7 @@ export class AppComponent {
   title = 'chattermost';
 
   constructor( private userService: UserService, private auth: AuthService, router: Router, private db: AngularFireDatabase ) {
+
     this.auth.user$.subscribe( user => {
       if ( !user ) { return; }
 

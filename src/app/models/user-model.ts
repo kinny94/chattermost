@@ -3,4 +3,5 @@ export interface User {
   username: string;
   name: string;
   member_since: Date;
+  image: string;
 }

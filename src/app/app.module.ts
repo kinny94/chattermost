@@ -6,6 +6,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { environment } from './../environments/environment';
 import { RouterModule } from '@angular/router';
+import {FlexLayoutModule} from '@angular/flex-layout';
 
 import {AppComponent} from './app.component';
 import {MaterialModule} from './material.module';
@@ -18,6 +19,7 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { HomeComponent } from './components/home/home.component';
 import { LogoutComponent } from './components/logout/logout.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
+import { AllUsersComponent } from './components/all-users/all-users.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,8 @@ import { LandingPageComponent } from './components/landing-page/landing-page.com
     LoginComponent,
     HomeComponent,
     LogoutComponent,
-    LandingPageComponent
+    LandingPageComponent,
+    AllUsersComponent
   ],
   imports: [
     BrowserModule,
@@ -34,6 +37,7 @@ import { LandingPageComponent } from './components/landing-page/landing-page.com
     MaterialModule,
     AngularFireAuthModule,
     AngularFireDatabaseModule,
+    FlexLayoutModule,
     RouterModule,
     AngularFireModule.initializeApp( environment.firebase ),
     RouterModule.forRoot([

@@ -11,7 +11,7 @@
     </ng-template>
   </mat-toolbar>
 
-  <mat-sidenav-container *ngIf="user$ | async; else landingPage" class="example-sidenav-container">
+  <mat-sidenav-container class="example-sidenav-container">
     <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'"
     [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
       <mat-nav-list>
@@ -22,11 +22,12 @@
     </mat-sidenav>
 
     <mat-sidenav-content>
-      <app-home></app-home>
+      <div *ngIf="user$ | async; else landingPage">
+        <app-home></app-home>
+      </div>
+      <ng-template #landingPage>
+        <app-landing-page></app-landing-page>
+      </ng-template>
     </mat-sidenav-content>
   </mat-sidenav-container>
-
-  <ng-template #landingPage  class="example-sidenav-container">
-    <app-landing-page></app-landing-page>
-  </ng-template>
 </div>
