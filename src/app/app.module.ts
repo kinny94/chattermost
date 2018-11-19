@@ -22,6 +22,7 @@ import { LandingPageComponent } from './components/landing-page/landing-page.com
 import { AllUsersComponent } from './components/all-users/all-users.component';
 import { EditProfileComponent } from './components/edit-profile/edit-profile.component';
 import { FormsModule } from '@angular/forms';
+import { ChatComponent } from './components/chat/chat/chat.component';
 
 @NgModule({
   imports: [
@@ -35,6 +36,7 @@ import { FormsModule } from '@angular/forms';
     AngularFireModule.initializeApp( environment.firebase ),
     RouterModule.forRoot([
       { path: 'edit-profile', component:  EditProfileComponent, canActivate: [ AuthGuardService ]},
+      { path: 'all-users', component: AllUsersComponent },
       { path: '', component: HomeComponent }
     ])
   ],
@@ -46,7 +48,8 @@ import { FormsModule } from '@angular/forms';
     LogoutComponent,
     LandingPageComponent,
     AllUsersComponent,
-    EditProfileComponent
+    EditProfileComponent,
+    ChatComponent
   ],
   providers: [
     AuthGuardService,

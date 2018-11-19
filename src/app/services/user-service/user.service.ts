@@ -1,5 +1,6 @@
+import { map } from 'rxjs/operators';
+import { User } from 'src/app/models/user-model';
 import { AuthService } from './../auth-service/auth.service';
-import { User } from './../../models/user-model';
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase, AngularFireObject, AngularFireList } from 'angularfire2/database';
 import * as firebase from 'firebase';
@@ -36,5 +37,22 @@ export class UserService {
 
   updateData  (uid: string, data: {}) {
     this.db.object('/users/' + uid ).update( data );
+  }
+
+  checkUsernameExists( username ) {
+    return this.db.list('/users').valueChanges().pipe(
+      map(
+        snapshots => {
+          let exists = false;
+          for ( const user of snapshots ) {
+            if ( user['username'] === username ) {
+              exists = true;
+              break;
+            }
+          }
+          return exists;
+        }
+      )
+    );
   }
 }

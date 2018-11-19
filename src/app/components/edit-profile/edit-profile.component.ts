@@ -1,9 +1,9 @@
 import { UserService } from './../../services/user-service/user.service';
-import { map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
 import { AuthService } from './../../services/auth-service/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/models/user-model';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-edit-profile',
@@ -12,35 +12,76 @@ import { User } from 'src/app/models/user-model';
 })
 export class EditProfileComponent implements OnInit {
 
-  currentUser$: Observable<User>;
-  changedImage = '';
-  changedUsername = '';
-  showErrorMessage = false;
+  currentUser: User;
+  changedImage: string;
+  changedUsername: string;
+  showImageErrorMessage = false;
+  showUsernameErrorMessage = false;
+  showUsernameTakenError = false;
 
   constructor( private authService: AuthService, private userService: UserService ) { }
 
   ngOnInit() {
-    this.currentUser$ = this.authService.getAppUser$().pipe(
-      map( user => user )
-    );
+    this.authService.getAppUser$().subscribe( user => {
+      this.currentUser = user;
+      this.changedImage = user.image;
+      this.changedUsername = user.username;
+    });
   }
 
-  checkImageUrl( url: string ) {
-    if ( this.changedImage !== '' ) {
-      return(url.match(/\.(jpeg|jpg|gif|png)$/) != null);
+  invalidUsername() {
+    if ( this.changedUsername && this.changedUsername.length > 30 ) {
+      this.showUsernameErrorMessage = true;
+      return true;
+    } else {
+      this.showUsernameErrorMessage = false;
+      return false;
+    }
+  }
+
+  invalidImageUrl(): boolean {
+    if (this.changedImage && (this.changedImage === '' ||  this.changedImage.match(/\.(jpeg|jpg|gif|png)$/) == null)) {
+      this.showImageErrorMessage = true;
+      return true;
     }
     return false;
   }
 
-  saveData( imageUrl ) {
-    if ( this.checkImageUrl( imageUrl ) || this.changedUsername !== '' ) {
-      this.showErrorMessage = false;
-      this.authService.getAppUser$().subscribe( user => {
-        const newData = { username: this.changedUsername, image: this.changedImage };
-        this.userService.updateData( user.id, newData);
+  isFormValid() {
+    if ( !this.invalidImageUrl() && !this.invalidUsername()) {
+      return true;
+    }
+    return false;
+  }
+
+  isUsernameTaken(): Observable<boolean> {
+    return this.userService.checkUsernameExists(this.changedUsername).pipe(
+      map( result => result )
+    );
+  }
+
+  savaData( data ) {
+    this.authService.getAppUser$().subscribe( user => {
+      this.userService.updateData( user.id, data);
+    });
+  }
+
+  submit() {
+    if ( this.changedUsername !== this.currentUser.username ) {
+      this.isUsernameTaken().subscribe( usernameExist => {
+        if (usernameExist) {
+          this.showUsernameTakenError = true;
+        } else {
+          this.showUsernameTakenError = false;
+          const newData = { username: this.changedUsername, image: this.changedImage };
+          this.savaData( newData );
+          return;
+        }
       });
     } else {
-      this.showErrorMessage = true;
+      const newData = { username: this.changedUsername, image: this.changedImage };
+      this.savaData( newData );
+      return;
     }
   }
 }

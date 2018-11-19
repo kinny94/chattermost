@@ -1,37 +1,38 @@
 <div class="wrapper">
   <div class="form-container">
     <mat-form-field>
-      <input [disabled]="true" value="{{ (currentUser$ | async)?.name }}" matInput placeholder="Name">
+      <input [disabled]="true" value="{{ currentUser?.name }}" matInput placeholder="Name">
     </mat-form-field>
 
     <mat-form-field>
-      <input [disabled]="true" value="{{ (currentUser$ | async)?.email }}" matInput placeholder="Email">
+      <input [disabled]="true" value="{{ currentUser?.email }}" matInput placeholder="Email">
     </mat-form-field>
 
     <mat-form-field>
-      <input [(ngModel)]="changedUsername" value="{{ (currentUser$ | async)?.username }}" matInput placeholder="Username" #username="ngModel">
+      <input [(ngModel)]="changedUsername" value="{{ currentUser?.username }}" matInput placeholder="Username" #username="ngModel">
     </mat-form-field>
+    <p *ngIf="invalidUsername()">Username should be less than 30 letter.</p>
+    <p *ngIf="showUsernameTakenError">Username already taken!</p>
 
     <mat-form-field>
-      <input [(ngModel)]="changedImage" value="{{ (currentUser$ | async)?.image }}" matInput placeholder="Photo url" #imageUrl="ngModel">
+      <input [(ngModel)]="changedImage" value="{{ currentUser?.image }}" matInput placeholder="Photo url" #imageUrl="ngModel">
     </mat-form-field>
+    <p *ngIf="invalidImageUrl()">Invalid image url</p>
 
   </div>
   <div class="submit-button">
-    <p *ngIf="showErrorMessage" class="error">Invaild form details!</p>
       <button
-        [disabled]="( !imageUrl.pristine || !username.pristine ) ? false : true"
+        [disabled]="!isFormValid()"
         mat-raised-button color="primary"
-        (click)="saveData( changedImage )"
+        (click)="submit()"
       >Submit</button>
   </div>
   <div class="form-control">
     <div *ngIf="imageUrl.pristine; else defaultImage">
-      <img src="{{ (currentUser$ | async)?.image }}"/>
+      <img src="{{ currentUser?.image }}"/>
     </div>
     <ng-template #defaultImage>
-      <img *ngIf="checkImageUrl( changedImage )" src="{{ changedImage }}"/>
-      <h3 *ngIf="!checkImageUrl( changedImage )">Invalid image Url</h3>
+      <img *ngIf="invalidImageUrl( changedImage )" src="{{ changedImage }}"/>
     </ng-template>
   </div>
 </div>
