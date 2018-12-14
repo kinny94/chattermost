@@ -23,6 +23,7 @@ import { AllUsersComponent } from './components/all-users/all-users.component';
 import { EditProfileComponent } from './components/edit-profile/edit-profile.component';
 import { FormsModule } from '@angular/forms';
 import { ChatComponent } from './components/chat/chat/chat.component';
+import { CreateChatroomComponent } from './components/chatrooms/create-chatroom/create-chatroom/create-chatroom.component';
 
 @NgModule({
   imports: [
@@ -36,6 +37,7 @@ import { ChatComponent } from './components/chat/chat/chat.component';
     AngularFireModule.initializeApp( environment.firebase ),
     RouterModule.forRoot([
       { path: 'edit-profile', component:  EditProfileComponent, canActivate: [ AuthGuardService ]},
+      { path: 'create-chatroom', component: CreateChatroomComponent, canActivate: [AuthGuardService ]},
       { path: 'all-users', component: AllUsersComponent },
       { path: '', component: HomeComponent }
     ])
@@ -49,7 +51,8 @@ import { ChatComponent } from './components/chat/chat/chat.component';
     LandingPageComponent,
     AllUsersComponent,
     EditProfileComponent,
-    ChatComponent
+    ChatComponent,
+    CreateChatroomComponent
   ],
   providers: [
     AuthGuardService,
