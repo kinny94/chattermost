@@ -29,6 +29,9 @@ export class EditProfileComponent implements OnInit {
     });
   }
 
+  /*
+    check if the user name is valid
+  */
   invalidUsername() {
     if ( this.changedUsername && this.changedUsername.length > 30 ) {
       this.showUsernameErrorMessage = true;
@@ -39,6 +42,9 @@ export class EditProfileComponent implements OnInit {
     }
   }
 
+  /*
+    check if the image url is valid or not
+  */
   invalidImageUrl(): boolean {
     if (this.changedImage && (this.changedImage === '' ||  this.changedImage.match(/\.(jpeg|jpg|gif|png)$/) == null)) {
       this.showImageErrorMessage = true;
@@ -54,34 +60,35 @@ export class EditProfileComponent implements OnInit {
     return false;
   }
 
+  /*
+    check if username is already taken
+  */
   isUsernameTaken(): Observable<boolean> {
     return this.userService.checkUsernameExists(this.changedUsername).pipe(
       map( result => result )
     );
   }
 
-  savaData( data ) {
-    this.authService.getAppUser$().subscribe( user => {
+  /*
+    save data to firebase
+  */
+  savaData(data) {
+    return this.authService.getAppUser$().subscribe( user => {
       this.userService.updateData( user.id, data);
     });
   }
 
   submit() {
-    if ( this.changedUsername !== this.currentUser.username ) {
-      this.isUsernameTaken().subscribe( usernameExist => {
-        if (usernameExist) {
-          this.showUsernameTakenError = true;
-        } else {
-          this.showUsernameTakenError = false;
-          const newData = { username: this.changedUsername, image: this.changedImage };
-          this.savaData( newData );
-          return;
-        }
-      });
-    } else {
-      const newData = { username: this.changedUsername, image: this.changedImage };
-      this.savaData( newData );
-      return;
-    }
+    this.isUsernameTaken().subscribe((userNameExists) => {
+      if(userNameExists){
+        this.showUsernameTakenError = true;
+        return;
+      }else{
+        this.showUsernameTakenError = false;
+        const newData = { username: this.changedUsername, image: this.changedImage };
+        this.savaData( newData );
+        return;
+      }
+    })
   }
 }

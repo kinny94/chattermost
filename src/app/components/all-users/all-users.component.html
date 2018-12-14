@@ -17,10 +17,11 @@
       class="card"
     >
       <mat-card>
-        <mat-card-header>
-          <div mat-card-avatar class="example-header-image"></div>
-          <mat-card-title><p>{{ user.username }}</p></mat-card-title>
-        </mat-card-header>
+        <div>
+          <mat-card-header>
+            <mat-card-title><p>{{ user.username }}</p></mat-card-title>
+          </mat-card-header>
+        </div>
         <img mat-card-image src="{{ user.image }}" alt="Photo of a Shiba Inu">
         <mat-card-actions>
           <button mat-raised-button color="warn" *ngIf="(user$ | async) == null" mat-button>Login to chat!</button>

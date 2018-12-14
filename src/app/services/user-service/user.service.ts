@@ -35,8 +35,8 @@ export class UserService {
     return this.db.list('/users');
   }
 
-  updateData  (uid: string, data: {}) {
-    this.db.object('/users/' + uid ).update( data );
+  updateData(uid: string, data: User) {
+    return this.db.object('/users/' + uid ).update(data);
   }
 
   checkUsernameExists( username ) {
