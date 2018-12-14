@@ -69,24 +69,16 @@ export class EditProfileComponent implements OnInit {
     );
   }
 
-  /*
-    save data to firebase
-  */
-  savaData(data) {
-    return this.authService.getAppUser$().subscribe( user => {
-      this.userService.updateData( user.id, data);
-    });
-  }
-
   submit() {
     this.isUsernameTaken().subscribe((userNameExists) => {
+      console.log(userNameExists);
       if(userNameExists){
         this.showUsernameTakenError = true;
         return;
       }else{
         this.showUsernameTakenError = false;
         const newData = { username: this.changedUsername, image: this.changedImage };
-        this.savaData( newData );
+        this.userService.updateData(this.currentUser.id, newData);
         return;
       }
     })

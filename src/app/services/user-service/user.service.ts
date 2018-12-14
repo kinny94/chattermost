@@ -35,7 +35,7 @@ export class UserService {
     return this.db.list('/users');
   }
 
-  updateData(uid: string, data: User) {
+  updateData(uid: string, data: {}) {
     return this.db.object('/users/' + uid ).update(data);
   }
 
