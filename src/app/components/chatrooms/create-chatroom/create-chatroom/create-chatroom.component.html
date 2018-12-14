@@ -2,20 +2,44 @@
   <div class="form-container">
 
     <mat-form-field>
-      <input [disabled]="true" value="" matInput placeholder="Name">
+      <input required value="" matInput placeholder="Name">
     </mat-form-field>
 
     <mat-form-field>
-      <input [disabled]="true" value="" matInput placeholder="Name">
+      <mat-select matNativeControl required>
+        <mat-option value="volvo">Volvo</mat-option >
+        <mat-option value="saab">Saab</mat-option >
+        <mat-option value="mercedes">Mercedes</mat-option >
+        <mat-option value="audi">Audi</mat-option >
+      </mat-select>
     </mat-form-field>
 
     <mat-form-field>
-      <input [disabled]="true" value="" matInput placeholder="Name">
+      <mat-select matNativeControl required>
+        <mat-option *ngFor="let user of datasource$ | async" value="user">hello</mat-option>
+        <mat-option value="volvo">Volvo</mat-option >
+        <mat-option value="saab">Saab</mat-option >
+        <mat-option value="mercedes">Mercedes</mat-option >
+        <mat-option value="audi">Audi</mat-option >
+      </mat-select>
     </mat-form-field>
 
-    <mat-form-field>
-      <input [disabled]="true" value="" matInput placeholder="Name">
-    </mat-form-field>
-
+    <div class="submit-button">
+      <button
+        [disabled]
+        mat-raised-button color="primary"
+        (click)="submit()"
+      >Submit
+      </button>
+    </div>
   </div>
+</div>
+
+<div class="chatroom__users">
+  <button mat-raised-button color="accent">
+    Username
+    <mat-icon>
+      clear
+    </mat-icon>
+  </button>
 </div>
