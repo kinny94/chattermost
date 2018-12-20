@@ -1,10 +1,11 @@
+import { User } from 'src/app/models/user-model';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import {User} from './../../../../models/user-model'
+import {User} from './../../../../models/user-model';
 import { UserService } from 'src/app/services/user-service/user.service';
 import { AuthService } from 'src/app/services/auth-service/auth.service';
 import { AngularFireList } from 'angularfire2/database';
-import { map } from 'rxjs/operators';
+import { map, filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-create-chatroom',
@@ -13,28 +14,73 @@ import { map } from 'rxjs/operators';
 })
 export class CreateChatroomComponent implements OnInit {
 
-  chatroom_users$: Observable<User[]>
-  moderators$: Observable<User[]>
-  datasoure$: AngularFireList<User>
-  currentUser: User;
-
 
   constructor(private userService: UserService, private authService: AuthService) { }
 
+
+  chatroom_users: User[] = [];
+  moderators: User[] = [];
+  allUsers$: Observable<User[]>;
+  currentUser: User;
+  moderatorError = false;
+  userError = false;
+
   ngOnInit() {
-    this.authService.getAppUser$().subscribe(user => this.currentUser = user)
-    this.datasoure$ = this.userService.getAllUsers();
-    this.moderators$.pipe(
-      map(users => users.push(this.currentUser))
-    )
-    this.chatroom_users$.pipe(
-      map(users => users.push(this.currentUser))
-    )
 
+    // Getting current user and adding default user
+    this.authService.getAppUser$().subscribe(user => {
+      this.currentUser = user;
+      this.chatroom_users.push(user);
+      this.moderators.push(this.currentUser);
+    });
 
-    this.chatroom_users$.subscribe(console.log);
-    // this.chatroom_users$.push(this.currentUser);
-    this.datasoure$.valueChanges().subscribe(console.log);
+    // Getting all users
+    this.allUsers$ = this.userService.getAllUsers().valueChanges();
+
+    // Removing default user from all users
+    this.allUsers$ = this.allUsers$.pipe(
+      map(users => users.filter(filteredUsers => filteredUsers.username !== this.currentUser.username)
+    ));
+
   }
 
+  onUserAdded(user) {
+    this.allUsers$.pipe(
+      map(users => {
+        return users.filter((filteredUser) => filteredUser.username === user.username)[0];
+      })
+    ).subscribe((currentUser) => this.chatroom_users.push(currentUser));
+
+    this.allUsers$ = this.allUsers$.pipe(
+      map(users => {
+        return users.filter((filterdUser) => filterdUser.username !== user.username);
+      })
+    );
+  }
+
+  onModeratorAdded(user) {
+    if (!this.moderators.includes(user)) {
+      this.moderators.push(user);
+    }
+  }
+
+  removeModerator(user) {
+    if (user === this.currentUser) {
+      this.moderatorError = true;
+    } else {
+      this.moderatorError = false;
+    }
+  }
+
+  removeUser(user) {
+    if (user === this.currentUser) {
+      this.userError = true;
+    } else {
+      this.userError = false;
+    }
+  }
+
+  createChatroom() {
+
+  }
 }

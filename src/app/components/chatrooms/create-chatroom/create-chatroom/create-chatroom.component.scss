@@ -11,7 +11,21 @@
     width: 100%;
 }
 
+.chatroom__moderators {
+  width: 100%;
+  padding: 16px;
+}
+
 .chatroom__users{
-    width: 100%;
-    padding: 16px;
+  width: 100%;
+  padding: 16px;
+}
+
+.chatroom__users__button {
+  margin-right: 16px;
+  margin-top: 8px;
+}
+
+.heading {
+  align-items: center;
 }

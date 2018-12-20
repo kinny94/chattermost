@@ -54,7 +54,7 @@ export class EditProfileComponent implements OnInit {
   }
 
   isFormValid() {
-    if ( !this.invalidImageUrl() && !this.invalidUsername()) {
+    if (!this.invalidImageUrl() && !this.invalidUsername()) {
       return true;
     }
     return false;
@@ -64,23 +64,26 @@ export class EditProfileComponent implements OnInit {
     check if username is already taken
   */
   isUsernameTaken(): Observable<boolean> {
-    return this.userService.checkUsernameExists(this.changedUsername).pipe(
-      map( result => result )
-    );
+    if (this.changedUsername !== this.currentUser.username) {
+      return this.userService.checkUsernameExists(this.changedUsername).pipe(
+        map( result => result )
+      );
+    } else {
+      this.showUsernameTakenError = false;
+    }
   }
 
   submit() {
     this.isUsernameTaken().subscribe((userNameExists) => {
-      console.log(userNameExists);
-      if(userNameExists){
+      if (userNameExists) {
         this.showUsernameTakenError = true;
         return;
-      }else{
+      } else {
         this.showUsernameTakenError = false;
         const newData = { username: this.changedUsername, image: this.changedImage };
         this.userService.updateData(this.currentUser.id, newData);
         return;
       }
-    })
+    });
   }
 }
