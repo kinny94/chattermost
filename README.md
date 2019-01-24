@@ -1,6 +1,6 @@
 # Chattermost
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.0.3.
+A work in progress chat application built using angular and firebase.  The application uses the angular material design and flex-layout. I am trying to clone an enterprise chat application known as mattermost.
 
 ## Development server
 
